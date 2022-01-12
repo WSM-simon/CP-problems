@@ -1,0 +1,61 @@
+import sys
+from collections import defaultdict
+
+# sys.stdin = open(r'C:\Users\wangs\Desktop\python_2021_2\test.in', 'r')
+
+sys.stdin = open('lightson.in', 'r')
+sys.stdout = open('lightson.out', 'w')
+
+data = [[int(i) for i in j.split()] for j in sys.stdin.read().strip().split('\n')]
+n, m = data[0]
+
+switch = defaultdict(list)
+
+for x, y, a, b in data[1:]:
+    switch[(x, y)].append((a, b))
+
+
+def adj_rooms_set(node):
+    x, y = node
+    return {(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)}
+
+
+def swich_on(start, graph):
+    stack = [start]
+    log = set()
+    lighted = set()
+    lighted.add((1, 1))
+    component = set()
+    component.add((1, 1))
+
+    while stack:
+        value = stack.pop()
+        will_add_to_stack = set()
+        will_add_to_stack |= adj_rooms_set(value)
+
+        will_light_rooms = graph[value]
+        lighted.update(will_light_rooms)
+
+        for j in will_light_rooms:
+            if adj_rooms_set(j) & component:
+                component.add(j)
+                will_add_to_stack.add(j)
+
+        for x, y in (will_add_to_stack - log) & lighted:
+            if x < 1 or x > n or y < 1 or y > n:
+                continue
+
+            component.add((x, y))
+            log.add((x, y))
+            stack.append((x, y))
+
+    return len(lighted)
+
+
+print(swich_on((1, 1), switch))
+
+
+
+
+
+
