@@ -1,2 +1,2 @@
 # CP-problems
-some competitive programming problems solutions
+Some competitive programming problems solutions
