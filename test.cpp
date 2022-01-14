@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int Max;
+const int Max = 1;
 
 int N, M;
 
@@ -13,5 +13,6 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
+    printf("%d", 1);
     return 0;
 }
