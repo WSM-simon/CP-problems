@@ -1,0 +1,4 @@
+*.exe
+.history/
+.vscode/
+test.cpp
