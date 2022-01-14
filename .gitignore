@@ -2,6 +2,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,c++
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,c++
 
+### Personal ###
+# Test files #
+*test.cpp
+
 ### C++ ###
 # Prerequisites
 *.d
