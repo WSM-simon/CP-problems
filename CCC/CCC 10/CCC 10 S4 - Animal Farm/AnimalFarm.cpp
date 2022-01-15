@@ -1,21 +1,64 @@
 #include <bits/stdc++.h>
 #define ll long long
 #define pii pair<int, int>
+#define ar3 array<int, 3>
 #define f first
 #define s second
-#define ar3 array<int, 3>
 
 using namespace std;
 
-int N;
-vector<int> e(103, -1);
-map<pii, int> edgeLength; // edgePen store which pen does an edge belongs to.
-map<pii, vector<int>> edgePen;
-set<ar3> pens; // store length, pen1, pen2;
+const int Max = 1e2 + 3;
 
-int get(int x) { return e[x] < 0 ? x : get(e[x]); }
+int N, e[Max];
+set<ar3> penList;                 // penList is used for kruskal.
+set<pii> edgeAdded;               // if an edge is in edgeAdded, means it is between two pens, which is not an outer edge.
+map<pii, int> edgeCost, edgeUsed; // edgeUsed is only for input, no need for the searching
 
-int volume(int x) { return -e[x]; }
+void input()
+{
+    cin >> N;
+    for (int n = 1; n <= N; ++n)
+    {
+        int p;
+        vector<int> edges, costs;
+        cin >> p;
+        for (int i = 0; i < p; ++i)
+        {
+            int edge;
+            cin >> edge;
+            edges.push_back(edge);
+        }
+        for (int i = 0; i < p; ++i)
+        {
+            int cost;
+            cin >> cost;
+            costs.push_back(cost);
+        }
+        for (int i = 0; i < p; ++i)
+        {
+            int k = i, j = i == p - 1 ? 0 : i + 1;
+            int i2 = edges[i], j2 = edges[j];
+            if (i2 > j2)
+                swap(i2, j2);
+            if (edgeUsed.find({i2, j2}) == edgeUsed.end())
+                edgeUsed[{i2, j2}] = n;
+            else
+            {
+                int a = n, b = edgeUsed[{i2, j2}], cost = edgeCost[{i2, j2}];
+                // a and b here are not points, they are pens(animals)
+                if (a > b)
+                    swap(a, b);
+                edgeAdded.insert({i2, j2});
+                penList.insert({cost, a, b});
+            }
+            edgeCost[{i2, j2}] = costs[k];
+        }
+    }
+}
+
+int get(int x) { return e[x] < 0 ? x : e[x] = get(e[x]); }
+
+bool same(int x, int y) { return get(x) == get(y); }
 
 bool unite(int x, int y)
 {
@@ -28,23 +71,15 @@ bool unite(int x, int y)
     return 1;
 }
 
-int kruskal1()
+int kruskal()
 {
-    int ans = 0;
-    for (ar3 arr : pens)
-        if (unite(arr[1], arr[2]))
-            ans += arr[0];
-    return ans;
-}
-
-int kruskal2()
-{
-    int ans = 0;
-    for (ar3 arr : pens)
-        if (arr[2] != N + 1)
-            if (unite(arr[1], arr[2]))
-                ans += arr[0];
-    return ans;
+    int cost = 0;
+    fill(e, e+Max, -1);
+    for (ar3 pen:penList)
+        if (unite(pen[1], pen[2]))
+            cost += pen[0];
+    
+    return cost;
 }
 
 int main()
@@ -52,62 +87,18 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    cin >> N;
-    for (int i = 1; i <= N; ++i)
-    {
-        int M;
-        cin >> M;
-        vector<int> ee, d;
-        for (int j = 0; j < M; ++j)
-        {
-            int tem;
-            cin >> tem;
-            ee.push_back(tem);
-        }
-        for (int j = 0; j < M; ++j)
-        {
-            int tem;
-            cin >> tem;
-            d.push_back(tem);
-        }
-        for (int j = 0; j < M - 1; j++)
-        {
-            pii e1 = {ee[j], ee[j + 1]};
-            int d1 = d[j];
-            if (e1.f > e1.s)
-                swap(e1.f, e1.s);
-            edgePen[e1].push_back(i);
-            edgeLength.insert({e1, d1});
-        }
-        pii e1 = {ee[0], ee[M - 1]};
-        int d1 = d[M - 1];
-        if (e1.f > e1.s)
-            swap(e1.f, e1.s);
-        edgePen[e1].push_back(i);
-        edgeLength.insert({e1, d1});
-    }
-    // input over
-    for (auto p : edgePen)
-    {
-        if (p.s.size() == 1)
-            pens.insert({edgeLength[p.f], p.s[0], N + 1});
-        else if (p.s.size() == 2)
-        {
-            sort(p.s.begin(), p.s.end());
-            pens.insert({edgeLength[p.f], p.s[0], p.s[1]});
-        }
-    }
-    // analysis over.
-    bool out;
-    int ans2 = kruskal2();
-    if (volume(get(1)) != N )
-        out = 1;
-    fill(e.begin(), e.end(), -1);
-    int ans1 = kruskal1();
-    if (out || ans2 < ans1)
-        cout << ans2;
-    else
-        cout << ans1;
+    input();
+    int ans1, ans2;
+    ans1 = kruskal();
 
+    // set the outside as pen 0.
+    for (pair<pii, int> edge : edgeUsed)
+        if (edgeAdded.find(edge.f) == edgeAdded.end())
+            penList.insert({edgeCost[{edge.f.f, edge.f.s}], 0, edge.s});
+
+    // the second search include pen 0, which means all the animals will go gather outside.
+    ans2 = kruskal();
+
+    cout << min(ans1, ans2);
     return 0;
 }
