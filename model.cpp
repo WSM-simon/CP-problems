@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int Max;
+const int Max = 1;
 
 int N, M;
 
