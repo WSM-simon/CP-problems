@@ -5,7 +5,7 @@
 ### Personal ###
 # Test files #
 *test.cpp
-
+*.pdf
 ### C++ ###
 # Prerequisites
 *.d
