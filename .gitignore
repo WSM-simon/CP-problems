@@ -6,6 +6,10 @@
 # Test files #
 *test.cpp
 *.pdf
+
+# Contest files #
+Contest/
+
 ### C++ ###
 # Prerequisites
 *.d

@@ -15,6 +15,6 @@ int main()
     cin.tie(NULL);
 
     cin >> N;
-
+    
     return 0;
 }

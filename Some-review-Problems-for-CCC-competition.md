@@ -59,15 +59,15 @@ So the time complexity is like so $O(VE)$
 
 ## DP
 
+### unsorted
+
+- [ ] [**CCC '18 S4 - Balanced Trees**](https://dmoj.ca/problem/ccc18s4)
+
 ### Backpack DP
 
 #### 0-1 backpack
 
-
-
 #### Complete backpack
-
-
 
 ### Range DP
 
@@ -75,12 +75,9 @@ So the time complexity is like so $O(VE)$
 ## Binary Search
 [oi-wiki binary search](https://oi-wiki.org/basic/binary/#_1)
 
-
-
 ## Prefix
 
 ### Prefix sum
-
 
 ### Minimum/maximum prefix
 
@@ -88,8 +85,17 @@ So the time complexity is like so $O(VE)$
 
 ### Prime test
 
+### Counting Divisors
+
+- [ ] [**Counting Divisors**](https://cses.fi/problemset/task/1081)
 ### Prime factorization
 
+- [ ] [**CCC '13 S5 - Factor Solitaire**](https://dmoj.ca/problem/ccc13s5) [code](C:\WSM\CodeSpaceWSM\CP-problems\CCC\CCC 13\CCC 13 S5 - Factor Solitaire\FactorSolitaire.cpp)
+
+  It's hard to calculate from 1 to N, but its way easier to calculate from N to 1.
+
 ### GCD
+
+- [ ] [**Common Divisors**](https://cses.fi/problemset/task/1081)
 
 ### LCM
