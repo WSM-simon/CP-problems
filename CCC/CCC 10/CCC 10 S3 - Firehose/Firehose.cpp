@@ -39,7 +39,7 @@ bool check_start_p(int n, int p)
     return 1;
 }
 
-// sadly, because this street is a circle, we have to try to check the begining to all the houses.
+// sadly, because this street is a circle, we have to try to check all the houses as beginning.
 bool check(int n)
 {
     for (int i = 0; i < H; ++i)
