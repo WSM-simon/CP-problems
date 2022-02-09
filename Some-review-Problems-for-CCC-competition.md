@@ -1,3 +1,12 @@
+## TODO List
+- [ ] [**COCI '21 Contest 4 #2 Autobus**](https://dmoj.ca/problem/coci21c4p2)
+- [ ] [**CCC '11 S5 - Switch**](https://dmoj.ca/problem/ccc11s5)
+- [ ] [**Fortune Telling**](https://codeforces.com/contest/1634/problem/B)
+
+
+
+
+
 # Review problems for CCC contest
 
 ## Graph Algorithms
