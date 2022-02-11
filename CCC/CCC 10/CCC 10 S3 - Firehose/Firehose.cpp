@@ -13,26 +13,46 @@ int H, K, house[Max2];
 bool check_start_p(int n, int p)
 {
     // To make sure the house cpy has a new order of houses
-    int house_cpy[1003];
-    memcpy(house_cpy, house, 4*H);
-    for (int i = 0; i < p; ++i)
-        house_cpy[i] += Max1;
-    sort(house_cpy, house_cpy + H);
+    // int house_cpy[1003];
+    // memcpy(house_cpy, house, 4*H);
+    // for (int i = 0; i < p; ++i)
+    //     house_cpy[i] += Max1;
+    // sort(house_cpy, house_cpy + H);
 
     // place a hydrant on p's right side at a distance of n
     // therefore the houses between p and p2 will have water
-    int p1 = house_cpy[0], p2 = p1 + 2 * n, k = K - 1;
-    while (p2 < house_cpy[H - 1])
+
+    // here is placing the hydrant for houses in front of p clockwise.
+    int p1 = house[p], p2 = p1 + 2 * n, k = K - 1;
+    while (p2 < house[H - 1])
     {
-        for (int i = 0; i < H; ++i)
+        for (int i = p; i < H; ++i)
         {
-            if (house_cpy[i] > p2)
+            if (house[i] > p2)
             {
-                p1 = house_cpy[i], p2 = p1 + 2 * n;
+                p1 = house[i], p2 = p1 + 2 * n;
                 // place down a new hydrant
                 if (--k < 0)
                     return 0;
                 break;
+            }
+        }
+    }
+
+    // here is placing hydrants for houses in the back of p clockwise.
+    if (p != 0)
+    {
+        while (p2 < house[p - 1] + Max1)
+        {
+            for (int i = 0; i < p; ++i)
+            {
+                if (house[i] + Max1 > p2)
+                {
+                    p1 = house[i] + Max1, p2 = p1 + 2 * n;
+                    if (--k < 0)
+                        return 0;
+                    break;
+                }
             }
         }
     }
