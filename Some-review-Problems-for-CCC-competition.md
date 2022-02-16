@@ -45,6 +45,8 @@ So the time complexity is like so $O(VE)$
 
 ### Topo Sort on graph
 
+- [ ] [**Longest Flight Route**](https://cses.fi/problemset/task/1680/)
+
 
 ### DSU
 

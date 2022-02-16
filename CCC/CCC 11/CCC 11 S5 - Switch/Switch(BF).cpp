@@ -13,20 +13,18 @@ int K, ans = 1e9 + 7;
 
 int bfs(bitset<Max> row)
 {
-    unordered_set<int> vis;
+    unordered_set<bitset<Max>> vis;
     queue<pair<bitset<Max>, int>> q;
-    q.push({row,0});
+    q.push({row, 0});
+    vis.insert(row);
     while (!q.empty())
     {
         bitset<Max> row2 = q.front().f;
         int cnt = q.front().s;
         q.pop();
-        if (vis.find(row2.to_ulong()) != vis.end())
-            continue;
-        vis.insert(row2.to_ulong());
         if (row2.count() == 0)
             return cnt;
-        for (int i=0; i<K; ++i)
+        for (int i = 0; i < K; ++i)
         {
             bitset<Max> row3(row2);
             if (row3[i] == 0)
@@ -34,15 +32,18 @@ int bfs(bitset<Max> row)
                 int cnt1 = 0, first1 = i;
                 row3[i] = 1, cnt1++;
                 // search forward
-                for (int j = i+1; j<K && row3[j]; ++j)
+                for (int j = i + 1; j < K && row3[j]; ++j)
                     cnt1++;
                 // search backward
-                for (int j=i-1; j>=0 && row3[j]; --j)
-                    cnt1++, first1=j;
-                if (cnt1>=4)
-                    for (int j = first1; j<first1+cnt1; ++j)
+                for (int j = i - 1; j >= 0 && row3[j]; --j)
+                    cnt1++, first1 = j;
+                if (cnt1 >= 4)
+                    for (int j = first1; j < first1 + cnt1; ++j)
                         row3[j] = 0;
-                q.push({row3, cnt+1});
+                if (vis.find(row3) != vis.end())
+                    continue;
+                vis.insert(row3);
+                q.push({row3, cnt + 1});
             }
         }
     }
