@@ -4,7 +4,7 @@
 #define pll pair<long long, long long>
 #define f first
 #define s second
-#define ar3 array<int 3>
+#define ar3 array<int, 3>
 
 using namespace std;
 
