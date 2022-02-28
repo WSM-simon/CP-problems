@@ -10,7 +10,7 @@ bool vis[Max];
 vector<int> adj[Max], topo;
 
 // worked only for DAG, doesn't work for a cyclic graph
-bool dfs(int n)
+void dfs(int n)
 {
     for (int v : adj[n])
         if (!vis[v])

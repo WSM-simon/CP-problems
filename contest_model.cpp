@@ -8,8 +8,9 @@
 
 using namespace std;
 
-const int Max = 1;
+const int Max = 1e5+3;
 const int inf = 0x3f3f3f3f;
+const int MOD = 1e9+7;
 
 int N, M;
 
