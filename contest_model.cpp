@@ -4,11 +4,11 @@
 #define pll pair<long long, long long>
 #define f first
 #define s second
-#define ar3 array<int 3>
+#define ar3 array<int, 3>
 
 using namespace std;
 
-const int Max = 1e5+3;
+const int MxN = 1e5+3;
 const int inf = 0x3f3f3f3f;
 const int MOD = 1e9+7;
 
