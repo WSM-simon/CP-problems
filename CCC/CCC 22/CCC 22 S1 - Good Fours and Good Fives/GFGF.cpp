@@ -8,9 +8,8 @@
 
 using namespace std;
 
-const int MxN = 1e5 + 3;
+const int Max = 1;
 const int inf = 0x3f3f3f3f;
-const int MOD = 1e9 + 7;
 
 int N, M;
 
@@ -19,5 +18,15 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
+    cin >> N;
+    int a = N / 4;
+    int b = N % 4;
+    if (a < b)
+    {
+        cout << "0\n";
+        return 0;
+    }
+    a -= b;
+    cout << 1 + a / 5 << '\n';
     return 0;
 }
