@@ -13,7 +13,6 @@ const int inf = 0x3f3f3f3f;
 const int MOD = 1e9 + 7;
 
 int N, M;
-
 int main()
 {
     ios_base::sync_with_stdio(false);
