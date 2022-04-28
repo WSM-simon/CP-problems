@@ -8,7 +8,7 @@
 *.pdf
 
 # Contest files #
-Contest/
+# Contest/
 
 ### C++ ###
 # Prerequisites
