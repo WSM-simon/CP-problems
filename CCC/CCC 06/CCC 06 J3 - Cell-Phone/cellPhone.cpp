@@ -1,43 +1,91 @@
 #include <bits/stdc++.h>
+#define ll long long
+
 using namespace std;
 
-string button[8] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+const int MxN = 1e5 + 3;
+const int MxM = 1e5 + 3;
 
-int findPressTime(char c){
-    int cntT=0;
-    if (find(_1pw, _1pw+9, c) != _1pw+9)
-        cntT++;
-    else if (find(_2pw, _2pw+9, c) != _2pw+9)
-        cntT+=2;
-    else if (find(_3pw, _3pw+9, c) != _3pw+9)
-        cntT+=3;
-    else if (find(_4pw, _4pw+2, c) != _4pw+2)
-        cntT+=4;
-    
-    return cntT;
-}
+int N, M;
+map<char, int> timesPress{
+    {'a', 1},
+    {'b', 2},
+    {'c', 3},
+    {'d', 1},
+    {'e', 2},
+    {'f', 3},
+    {'g', 1},
+    {'h', 2},
+    {'i', 3},
+    {'j', 1},
+    {'k', 2},
+    {'l', 3},
+    {'m', 1},
+    {'n', 2},
+    {'o', 3},
+    {'p', 1},
+    {'q', 2},
+    {'r', 3},
+    {'s', 4},
+    {'t', 1},
+    {'u', 2},
+    {'v', 3},
+    {'w', 1},
+    {'x', 2},
+    {'y', 3},
+    {'z', 4},
+};
 
-int main() {
+map<char, int> buttonOfLetter{
+    {'a', 2},
+    {'b', 2},
+    {'c', 2},
+    {'d', 3},
+    {'e', 3},
+    {'f', 3},
+    {'g', 4},
+    {'h', 4},
+    {'i', 4},
+    {'j', 5},
+    {'k', 5},
+    {'l', 5},
+    {'m', 6},
+    {'n', 6},
+    {'o', 6},
+    {'p', 7},
+    {'q', 7},
+    {'r', 7},
+    {'s', 7},
+    {'t', 8},
+    {'u', 8},
+    {'v', 8},
+    {'w', 9},
+    {'x', 9},
+    {'y', 9},
+    {'z', 9},
+};
+
+int main()
+{
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
+    cin.tie(NULL);
 
-    string word;
-
-    while(cin >> word){
-        if (word == "halt")
+    string s;
+    while (cin >> s)
+    {
+        if (s == "halt")
             break;
-        
-        int cntT=0;
-        for (size_t i=0; i<word.length()-1; i++){
-            int w1=findPressTime(word[i]);
-            int w2=findPressTime(word[i+1]);
-            if (w1==w2)
-                cntT+=2;
-            cntT+=w1;
+        int cnt = 0, pre = 0;
+        for (char c : s)
+        {
+            int butn = buttonOfLetter[c];
+            int pres = timesPress[c];
+            if (butn == pre)
+                cnt += 2;
+            pre = butn;
+            cnt += pres;
         }
-        cntT+=findPressTime(*(word.end()-1));
-        cout << cntT << '\n';
+        cout << cnt << '\n';
     }
-
     return 0;
 }

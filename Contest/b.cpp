@@ -16,14 +16,7 @@ int N, M;
 string grid[21];
 int dx[4] = {1, 0, -1, 0}, dy[4] = {0, 1, 0, -1};
 
-pii find_first_star()
-{
-    for (int i = 0; i < N; ++i)
-        for (int j = 0; j < N; ++j)
-            if (grid[i][j] == '*')
-                return make_pair(i, j);
-    return make_pair(-1, -1);
-}
+bool e(int i, int j) { return i >= 0 && i < N && j >= 0 && j < N; }
 
 int main()
 {
@@ -34,36 +27,21 @@ int main()
     for (int i = 0; i < N; ++i)
         cin >> grid[i];
 
-    pii first_star = find_first_star();
-    if (first_star.first == -1)
-    {
-        cout << "N" << '\n';
-        return 1;
-    }
-    int ver_cnt = 0;
-    for (int i = first_star.second; i < N; ++i)
-    {
-        if (grid[first_star.first][i] == '*')
-            ver_cnt++;
-    }
-    if (ver_cnt % 2 == 0 || ver_cnt < 3)
-    {
-        cout << "N" << '\n';
-        return 1;
-    }
-    int mid = first_star.second + ver_cnt / 2;
-
-    int hor_cnt = 0;
-    for (int j = first_star.first + 1; j < N; ++j)
-    {
-        if (grid[j][mid] == '*')
+    pii mid_pnt = {-1, -1};
+    for (int i = 0; i < N; ++i)
+        for (int j = 0; j < N; ++j)
         {
-            hor_cnt++;
+            int n_connects = 0;
+            for (int k = 0; k < 4; ++k)
+            {
+                int x = i + dx[k], y = j + dy[k];
+                if (e(x, y) && grid[x][y] == '*')
+                    n_connects++;
+            }
+            if (n_connects == 3)
+                mid_pnt = make_pair(i, j);
         }
-    }
-    if (ver_cnt == hor_cnt)
-        cout << "Y\n";
-    else
-        cout << "N\n";
+
+    cout << mid_pnt.first << ' ' << mid_pnt.second;
     return 0;
 }
