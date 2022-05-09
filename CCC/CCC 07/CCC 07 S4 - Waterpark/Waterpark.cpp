@@ -28,7 +28,7 @@ int main()
     cin.tie(NULL);
 
     cin >> N;
-    int v1, v2;fr
+    int v1, v2;
     cin >> v1 >> v2;
     while(v1!=0)
     {
