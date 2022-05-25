@@ -1,5 +1,3 @@
-// CCC '22 J1 - Cupcake Party
-
 #include <bits/stdc++.h>
 #define ll long long
 
@@ -15,7 +13,14 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    cin >> N >> M;
-    cout << N*8+M*3 - 28 << '\n';
+    int a=1, b =2;
+    if ((--b == 1) || a==b)
+    {
+        cout << "YES";
+    }
+    else
+        cout << "NO";
+    cout << "\n";
+    cout << a << ' ' << b;
     return 0;
 }

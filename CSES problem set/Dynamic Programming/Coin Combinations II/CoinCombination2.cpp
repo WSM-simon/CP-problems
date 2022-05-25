@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int Max = 1e6 + 3;
+const int Max = 1e2 + 3;
 const int Mod = 1e9 + 7;
 int N, target, dp[Max];
 vector<int> coins;

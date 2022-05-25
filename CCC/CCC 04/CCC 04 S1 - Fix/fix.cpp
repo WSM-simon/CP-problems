@@ -25,9 +25,11 @@ bool check(string s1, string s2)
         return 0;
 
     fixfree = 0;
-    for (int i = (int)s1.size() - (int)s2.size(), j=0; i < (int)s1.size(); ++i, ++j)
+    reverse(s1.begin(), s1.end());
+    reverse(s2.begin(), s2.end());
+    for (int i = 0; i < (int)s2.size(); ++i)
     {
-        if (s1[i] != s2[j])
+        if (s1[i] != s2[i])
         {
             fixfree = 1;
             break;
@@ -44,12 +46,13 @@ void solve()
     cin >> s1 >> s2 >> s3;
     if (!check(s1, s2) || !check(s2, s3) || !check(s1, s3))
     {
-        cout << "NO\n";
+        cout << "No\n";
         return;
     }
-    cout << "YES\n";
+    cout << "Yes\n";
     return;
 }
+
 int main()
 {
     ios_base::sync_with_stdio(false);
