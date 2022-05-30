@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #define ll long long
+#define inf 1e18
 
 using namespace std;
 
@@ -48,12 +49,23 @@ int main()
         }
         v2.push_back(sum);
     }
+    // two pointers
+    sort(v1.begin(), v1.end());
     sort(v2.begin(), v2.end());
-    for (int i = 0; i < (int)v1.size(); ++i)
+    reverse(v2.begin(), v2.end());
+    ll pt = 0, pre = inf, cnt2 = inf;
+    int size_v2 = (int)v2.size();
+    for (auto r : v1)
     {
-        ll target = M - v1[i];
-        auto bounds = equal_range(v2.begin(), v2.end(), target);
-        cnt += bounds.second - bounds.first;
+        ll diff = M - r;
+        if (diff != pre)
+        {
+            pre = diff, cnt2 = 0;
+            for (; pt < size_v2 && v2[pt] > diff; ++pt);
+            for (; pt < size_v2 && v2[pt] == diff; ++pt)
+                cnt2++;
+        }
+        cnt += cnt2;
     }
     cout << cnt << "\n";
     return 0;

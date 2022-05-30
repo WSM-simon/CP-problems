@@ -1,3 +1,4 @@
+// there're still 2 cases can't pass
 #include <bits/stdc++.h>
 #define ll long long
 #define ar3 array<long long, 3>
@@ -12,8 +13,20 @@ const int MxM = 1e5 + 3;
 int N, ans[MxN];
 pair<ll, ll> target;
 vector<pair<ll, ll>> inst1, inst2;
-vector<pair<ll, ll>> mix1, mix2;
-map<pair<ll,ll>, vector<ll>> steps_count1, steps_count2;
+struct S;
+vector<S> mix1, mix2;
+
+struct S
+{
+    ll x, y, cnt;
+    bool operator<(const S &s) const
+    {
+        if (x != s.x)
+            return x < s.x;
+        else
+            return y < s.y;
+    }
+};
 
 int main()
 {
@@ -31,8 +44,8 @@ int main()
         else
             inst2.push_back(tem);
     }
-    int size_inst1 = (int)inst1.size(), size_inst2 = (int)inst2.size();
 
+    int size_inst1 = (int)inst1.size(), size_inst2 = (int)inst2.size();
     // find the mix1
     for (int i = 0; i < (1 << size_inst1); ++i)
     {
@@ -41,8 +54,7 @@ int main()
         for (int j = 0; j < size_inst1; ++j)
             if ((1 << j) & i)
                 co.f += inst1[j].f, co.s += inst1[j].s, cnt++;
-        mix1.push_back(co);
-        steps_count1[co].push_back(cnt);
+        mix1.push_back({co.f, co.s, cnt});
     }
 
     // find the mix2
@@ -53,23 +65,21 @@ int main()
         for (int j = 0; j < size_inst2; ++j)
             if ((1 << j) & i)
                 co.f += inst2[j].f, co.s += inst2[j].s, cnt++;
-        mix2.push_back(co);
-        steps_count2[co].push_back(cnt);
+        mix2.push_back({co.f, co.s, cnt});
     }
+
+    sort(mix2.begin(), mix2.end());
 
     int size_mix1 = (int)mix1.size(), size_mix2 = (int)mix2.size();
-    // do binary search, search the (target - mix1[i]) in mix2
-    // sort(mix2.begin(), mix2.end());
-    for (int i=0; i<size_mix1; ++i)
+    for (auto p1 : mix1)
     {
-        pair<ll,ll> obj = {target.f - mix1[i].f, target.s-mix1[i].s};
-        if (steps_count2.find(obj) != steps_count2.end())
-            for (int i:steps_count1[mix1[i]])
-                for (int j:steps_count2[obj])
-                    ans[i+j]++;
+        S obj = {target.f - p1.x, target.s - p1.y, 0};
+        auto bounds = equal_range(mix2.begin(), mix2.end(), obj);
+        for (auto it = bounds.f; it != bounds.s; ++it)
+            ans[p1.cnt + it->cnt]++;
     }
 
-    for (int i=1; i<=N; ++i)
+    for (int i = 1; i <= N; ++i)
         cout << ans[i] << '\n';
     return 0;
 }
