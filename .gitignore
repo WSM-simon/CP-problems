@@ -6,9 +6,12 @@
 # Test files #
 *test.cpp
 *.pdf
+*contest_model.cpp
+*test.py
 
 # Contest files #
 # Contest/
+
 
 ### C++ ###
 # Prerequisites
