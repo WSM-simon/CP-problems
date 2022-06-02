@@ -6,15 +6,8 @@ using namespace std;
 const int MxN = 2e5 + 3;
 const int MxM = 1e5 + 3;
 
-int N;
-ll badpath = 0;
+ll N, black[MxN], white[MxN], badPath = 0;
 bool col[MxN];
-struct node;
-node path[MxN];
-
-struct node {
-    vector<int> white, black;
-};
 
 int main()
 {
@@ -31,19 +24,24 @@ int main()
         int t1, t2;
         cin >> t1 >> t2;
         if (col[t1])
-            path[t2].black.push_back(t1);
+            black[t2]++;
         else
-            path[t2].white.push_back(t1);
+            white[t2]++;
         if (col[t2])
-            path[t1].black.push_back(t2);
+            black[t1]++;
         else
-            path[t1].white.push_back(t2);
-    }
-    for (int i = 1; i <= N; ++i) {
-        if (col[i]) {
-            badpath+=path[i].black.size() * path[i].white.size() + 
-        }
+            white[t1]++;
     }
 
+    // counting 3-nodes circumstances
+    for (int i = 1; i <= N; ++i) {
+        if (col[i])
+            badPath += black[i] * white[i] + white[i] * max(0ll, white[i] - 1);
+        else
+            badPath += black[i] * white[i] + white[i] * max(0ll, black[i] - 1);
+    }
+
+    // cout << badPath << '\n';
+    cout << N * (N - 1) / 2 - (N - 1) - badPath << '\n';
     return 0;
 }

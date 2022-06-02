@@ -55,6 +55,7 @@ int main()
     sort(mix2.begin(), mix2.end());
     reverse(mix2.begin(), mix2.end());
 
+    // two pointers
     ll pt = 0, size_mix2 = mix2.size();
     pll pre = {inf, inf};
     ll tem_sum[MxN];
