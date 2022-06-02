@@ -7,8 +7,14 @@ const int MxN = 2e5 + 3;
 const int MxM = 1e5 + 3;
 
 int N;
-bool color[MxN];
-vector<int> path[MxN];
+ll badpath = 0;
+bool col[MxN];
+struct node;
+node path[MxN];
+
+struct node {
+    vector<int> white, black;
+};
 
 int main()
 {
@@ -16,17 +22,28 @@ int main()
     cin.tie(NULL);
 
     cin >> N;
-    for (int i = 0; i < N; ++i) {
+    for (int i = 1; i <= N; ++i) {
         char c;
         cin >> c;
-        if (c == 'B') color[i] = 1;
+        if (c == 'B') col[i] = 1;
     }
-    for (int i=0;i<N-1; ++i){
+    for (int i = 1; i <= N - 1; ++i) {
         int t1, t2;
         cin >> t1 >> t2;
-        path[t1].push_back(t2);
-        path[t2].push_back(t1);
+        if (col[t1])
+            path[t2].black.push_back(t1);
+        else
+            path[t2].white.push_back(t1);
+        if (col[t2])
+            path[t1].black.push_back(t2);
+        else
+            path[t1].white.push_back(t2);
     }
-    
+    for (int i = 1; i <= N; ++i) {
+        if (col[i]) {
+            badpath+=path[i].black.size() * path[i].white.size() + 
+        }
+    }
+
     return 0;
 }
