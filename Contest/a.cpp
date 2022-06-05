@@ -12,5 +12,6 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
+    long double a;
     return 0;
 }

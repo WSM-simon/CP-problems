@@ -11,6 +11,19 @@ const ll MAX = 1e9;
 
 vector<vector<ll>> grid(N, vector<ll>(N, inf));
 
+void myPrint() {
+    for (int i = 1; i < N; ++i) {
+        for (int j = 1; j < N; ++j) {
+            if (grid[i][j] == inf)
+                cout << 'X';
+            else
+                cout << grid[i][j];
+            cout << ' ';
+        }
+        cout << '\n';
+    }
+}
+
 bool solveRow(int r, vector<vector<ll>> &g, int row[N], int col[N]) {
     ll &x = g[r][1], &y = g[r][2], &z = g[r][3];
     if (x == inf) {
@@ -83,6 +96,7 @@ void randomGrid(vector<vector<ll>> &g) {
     for (int i = 1; i < N; ++i)
         for (int j = 1; j < N; ++j)
             if (g[i][j] != inf) row[i]++, col[j]++;
+            
     for (int i = 1; i < N; ++i) {
         if (row[i] == 1)
             for (int j = 1; j < N; ++j)
@@ -100,19 +114,6 @@ void randomGrid(vector<vector<ll>> &g) {
     // if there is no number on grid, all "X"
     g[1][1] = MyRandom(), g[1][2] = MyRandom();
     return;
-}
-
-void myPrint() {
-    for (int i = 1; i < N; ++i) {
-        for (int j = 1; j < N; ++j) {
-            if (grid[i][j] == inf)
-                cout << 'X';
-            else
-                cout << grid[i][j];
-            cout << ' ';
-        }
-        cout << '\n';
-    }
 }
 
 int main() {
