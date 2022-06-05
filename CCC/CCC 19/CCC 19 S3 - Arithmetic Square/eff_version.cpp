@@ -15,14 +15,11 @@ bool solveRow(int r, vector<vector<ll>> &g, int row[N], int col[N]) {
     ll &x = g[r][1], &y = g[r][2], &z = g[r][3];
     if (x == inf) {
         x = 2 * y - z, row[r]++, col[1]++;
-        if (x < MIN || x > MAX) return 0;
     } else if (y == inf) {
         if ((x + z) % 2) return 0;
         y = (x + z) / 2, row[r]++, col[2]++;
-        if (y < MIN || y > MAX) return 0;
     } else if (z == inf) {
         z = (2 * y - x), row[r]++, col[3]++;
-        if (z < MIN || z > MAX) return 0;
     }
     return 1;
 }
@@ -31,14 +28,11 @@ bool solveCol(int c, vector<vector<ll>> &g, int row[N], int col[N]) {
     ll &x = g[1][c], &y = g[2][c], &z = g[3][c];
     if (x == inf) {
         x = 2 * y - z, row[1]++, col[c]++;
-        if (x < MIN || x > MAX) return 0;
     } else if (y == inf) {
         if ((x + z) % 2) return 0;
         y = (x + z) / 2, row[2]++, col[c]++;
-        if (y < MIN || y > MAX) return 0;
     } else if (z == inf) {
         z = (2 * y - x), row[3]++, col[c]++;
-        if (z < MIN || z > MAX) return 0;
     }
     return 1;
 }
@@ -127,14 +121,10 @@ int main() {
 
     for (int i = 1; i < N; ++i) {
         for (int j = 1; j < N; ++j) {
-            int tem;
-            cin >> tem;
-            if (cin.fail()) {
-                cin.clear();
-                cin.ignore();
-                continue;
-            }
-            grid[i][j] = tem;
+            string s;
+            cin >> s;
+            if (s != "X")
+                grid[i][j] = stoi(s);
         }
     }
     vector<vector<ll>> tem_grid = grid;
