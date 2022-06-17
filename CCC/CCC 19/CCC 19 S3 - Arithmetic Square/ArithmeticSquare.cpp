@@ -89,6 +89,7 @@ void randomGrid(vector<vector<ll>> &g) {
     for (int i = 1; i < N; ++i)
         for (int j = 1; j < N; ++j)
             if (g[i][j] != inf) row[i]++, col[j]++;
+
     for (int i = 1; i < N; ++i) {
         if (row[i] == 1)
             for (int j = 1; j < N; ++j)
