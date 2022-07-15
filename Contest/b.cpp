@@ -3,61 +3,70 @@
 
 using namespace std;
 
-const int MxN = 1e5 + 3;
-const int MxM = 1e5 + 3;
+const ll MxN = 2e5 + 3;
+const ll MxM = 2e5 + 3;
 
-int N, M;
+ll N, Q, preQ1[MxN], preQ2[MxN];
+vector<ll> q1, q2;
 
-bool check(string s1, string s2)
-{
-    list<char> str(s1.begin(), s1.end());
-    list<char> str2(s2.begin(), s2.end());
-    auto it = str.begin(), it2 = ++str.begin();
-    while (it != str.end() && it2 != str.end() && !str.empty() && !str2.empty())
-    {
-        if (str.front() == str2.front())
-        {
-            str.pop_front();
-            str2.pop_front();
-            it = str.begin();
-            it2 = ++str.begin();
-            continue;
-        }
-        if (*it == *it2 && *it != 'z')
-        {
-            str.erase(it2);
-            *it = *it + 1;
-            it = --str.begin();
-            it2 = str.begin();
-        }
-        it++, it2++;
-    }
-    if (str.front() == str2.front())
-    {
-        str.pop_front();
-        str2.pop_front();
-        it = str.begin();
-        it2 = ++str.begin();
-    }
-    if (str2.size() == 0 && str.size() == 0)
-        return 1;
-    else
-        return 0;
+ll foo(ll x, ll l, ll r) {
+    return abs((preQ1[x] - preQ1[l]) - (preQ2[x] - preQ2[r + 1]));
 }
-int main()
-{
+
+ll tripartition(ll l, ll r) {
+    ll l2 = l, r2 = r;
+    while (l2 < r2 - 2) {
+        ll mid = (l2 + r2) / 2;
+        ll mmid = (mid + r2) / 2;
+        if (foo(mid, l, r) > foo(mmid, l, r))
+            l2 = mid;
+        else
+            r2 = mmid;
+    }
+    
+    if (foo(l2, l, r) < foo(l2 + 1, l, r))
+        if (foo(l2, l, r) < foo(l2 + 2, l, r))
+            return l2;
+    else if (foo(l2 + 1, l, r) < foo(l2, l, r))
+        if (foo(l2 + 1, l, r) < foo(l2 + 2, l, r))
+            return l2 + 1;
+    else if (foo(l2 + 2, l, r) < foo(l2 + 1, l, r))
+        if (foo(l2 + 2, l, r) < foo(l2, l, r))
+            return l2 + 2;
+}
+
+void solve(ll l, ll r) {
+    ll ans = tripartition(l, r);
+    cout << max(preQ1[ans] - preQ1[l], preQ2[ans] - preQ2[r + 1]) << '\n';
+}
+
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    cin >> N;
-    for (int i = 0; i < N; ++i)
-    {
-        string s1, s2;
-        cin >> s1 >> s2;
-        if (s1.size() >= s2.size() && check(s1, s2))
-            cout << "YES\n";
-        else
-            cout << "NO\n";
+    cin >> N >> Q;
+    for (ll i = 0; i < N; ++i) {
+        ll tem;
+        cin >> tem;
+        q1.push_back(tem);
+    }
+    for (ll i = 0; i < N; ++i) {
+        ll tem;
+        cin >> tem;
+        q2.push_back(tem);
+    }
+
+    for (ll i = 0; i < N; ++i)
+        preQ1[i + 1] = preQ1[i] + q1[i];
+    preQ2[N - 1] = q2[N - 1];
+    for (ll i = N - 2; i >= 0; --i)
+        preQ2[i] = preQ2[i + 1] + q2[i];
+
+    for (ll i = 0; i < Q; ++i) {
+        ll l, r;
+        cin >> l >> r;
+        l--, r--;
+        solve(l, r);
     }
     return 0;
 }

@@ -1,46 +1,35 @@
 #include <bits/stdc++.h>
 #define ll long long
+
 using namespace std;
 
-ll N;
-ll arr[2000];
+const int MxN = 1e5 + 3;
+const int MxM = 1e5 + 3;
 
-set<ll> st;
-vector<ll> ans;
-int main()
-{
+int N, S, T;
+vector<pair<char, int>> ins;
+
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-
-    cin >> N;
-    ll first, last;
-    for (ll i = 0; i < N; ++i)
-    {
+    cin >> N >> S >> T;
+    for (int i = 0; i < N; ++i) {
+        char c;
         ll tem;
-        cin >> tem;
-        if (i == 0)
-            first = tem;
-        if (i == N - 1)
-            last = tem;
-        st.insert(tem);
+        cin >> c >> tem;
+        ins.push_back({c, tem});
     }
-    for (ll i : st)
-    {
-        if (i == first)
-            continue;
-        ll itv = i - first;
-        if (itv > 100000)
-            break;
-        for (ll j = first; j <= last; j += itv)
-        {
-            if (st.find(j) == st.end())
-            {
-                break;
-            }
-            if (j + itv > last)
-                ans.push_back(j + itv);
-        }
+    reverse(ins.begin(), ins.end());
+    for (int i = 0; i < N; ++i) {
+        T = ~(ins[i].second ^ T);
     }
-    cout << *min_element(ans.begin(), ans.end()) << '\n';
+    int temmm;
+    reverse(ins.begin(), ins.end());
+    
+    for (int i=0;i<N; ++i)
+    if (T == S)
+        cout << 0 << '\n';
+    else
+        cout << 1 << '\n';
     return 0;
 }
