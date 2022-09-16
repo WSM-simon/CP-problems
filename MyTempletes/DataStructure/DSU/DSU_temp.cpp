@@ -16,12 +16,12 @@ struct DSU {
     int find(int x) {
         return (e[x] < 0 ? x : e[x] = find(e[x]));
     }
+    // if size of x is smaller than size of y
+    // swap it
+    // the result is that size of x is greater than size of y
     void unite(int x, int y) {
         x = find(x), y = find(y);
         if (x == y) return;
-        // if size of x is smaller than size of y
-        // swap it
-        // the result is that size of x is greater than size of y
         if (e[x] > e[y]) swap(x, y);
         e[x] += e[y], e[y] = x;
     }

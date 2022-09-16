@@ -12,14 +12,12 @@ int N, M;
 bool vis[Max];
 vector<pli> graph[Max];
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     cin >> N >> M;
-    for (int i = 0; i < M; ++i)
-    {
+    for (int i = 0; i < M; ++i) {
         int e1, e2, w;
         cin >> e1 >> e2 >> w;
         graph[e1].push_back({w, e2});
@@ -32,10 +30,8 @@ int main()
     set<pli> pq;
     pq.insert({0, 1});
 
-    for (int i = 0; i < N; ++i)
-    {
-        if (pq.empty())
-        {
+    for (int i = 0; i < N; ++i) {
+        if (pq.empty()) {
             cout << "IMPOSSIBLE";
             return 0;
         }
@@ -48,7 +44,7 @@ int main()
         for (pli v : graph[node.s])
             if (!vis[v.s])
                 pq.insert(v);
-        }
+    }
 
     cout << weight;
     return 0;
