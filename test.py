@@ -1,47 +1,16 @@
-class MinStack:
-    def __init__(self):
-        """
-        initialize your data structure here.
-        """
-        self.stack = []
-        self.min_value = -1
+import sys
 
-    def push(self, x: int) -> None:
-        if not self.stack:
-            self.stack.append(0)
-            self.min_value = x
-        else:
-            diff = x-self.min_value
-            self.stack.append(diff)
-            self.min_value = self.min_value if diff > 0 else x
+datas = sys.stdin.readlines()
 
-    def pop(self) -> None:
-        if self.stack:
-            diff = self.stack.pop()
-            if diff < 0:
-                top = self.min_value
-                self.min_value = top - diff
-            else:
-                top = self.min_value + diff
-            return top
+for data in datas:
+    words = data.split()
+    words = words[::-1]
+    out = []
+    for word in words:
+        if not word.isnumeric():
+            out.append(word[::-1])
+            continue
+        out.append(word)
+    print(" ".join(out))
 
-    def top(self) -> int:
-        return self.min_value if self.stack[-1] < 0 else self.stack[-1] + self.min_value
-
-    def getMin(self) -> int:
-        return self.min_value if self.stack else -1
-
-
-stk = MinStack()
-stk.push(1)
-stk.push(4)
-stk.push(-21)
-stk.push(999)
-stk.pop()
-print(stk.getMin())
-stk.pop()
-print(stk.getMin())
-stk.pop()
-print(stk.getMin())
-stk.pop()
 
