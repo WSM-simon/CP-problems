@@ -1,29 +1,27 @@
 #include <bits/stdc++.h>
 #define ll long long
+#define pii pair<int, int>
 
 using namespace std;
 
-const int MxN = 1e3 + 3;
-const int MxM = 1e3 + 3;
+const int MxN = 1e2 + 3;
+const int MxM = 1e2 + 3;
 
 int N, K;
 int metals[MxN];
-vector<int> recipes[MxM];
+vector<int> recipes[MxN];
 
 bool make_metal(int x) {
-    if (recipes[x].size() == 0)
+    if (recipes[x].empty())
         return false;
-    for (int i : recipes[x]) {
-        // in stock
-        if (metals[i] >= 1)
-            continue;
-        // cannot make one metal i
-        else if (!make_metal(i))
+    for (int m : recipes[x]) {
+        if (metals[m] == 0 && !make_metal(m))
             return false;
+        else
+            metals[m]--;
     }
+
     // make one metal x
-    for (int i : recipes[x])
-        metals[i]--;
     metals[x]++;
     return true;
 }

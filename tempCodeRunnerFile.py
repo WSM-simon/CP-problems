@@ -1,2 +1,2 @@
 
-    if itv > 100000:
+s = set(data)

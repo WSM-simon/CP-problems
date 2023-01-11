@@ -1,31 +1,28 @@
-<<<<<<< HEAD
-
-for n in range(1, 101):
-    print(str(n)+" ++++++++")
-    x = 50**n+(50*n+1)**50
-    cnt = 0
-    for i in range(1, 100001):
-        if x % i == 0:
-            cnt += 1
-            if (cnt >= 4):
-                break
-            print(i)
-    print()
-=======
 import sys
+from sys import stdin
 
-datas = sys.stdin.readlines()
+N = int(stdin.readline().strip())
+data = list(map(int, stdin.readline().strip().split()))
 
-for data in datas:
-    words = data.split()
-    words = words[::-1]
-    out = []
-    for word in words:
-        if not word.isnumeric():
-            out.append(word[::-1])
-            continue
-        out.append(word)
-    print(" ".join(out))
+data.sort()
 
+# this dictionary tells me how many cows can afford a maxmium of i dollars
+dic = dict()
+for i in data:
+    if i in dic:
+        dic[i] += 1
+    else:
+        dic[i] = 1
 
->>>>>>> 7f771af9ba3fa8cd220cd41d9c4dbeb980103a2d
+# this set tells me how many kinds of cows are there
+s = list(set(data))
+
+mx_gain = 0
+min_fee = 9999999
+remain_cows = N
+for fee in s:
+    if ((fee * remain_cows) > mx_gain):
+        mx_gain = fee * remain_cows
+        for 
+
+print(f"{mx_gain} {min_fee}")

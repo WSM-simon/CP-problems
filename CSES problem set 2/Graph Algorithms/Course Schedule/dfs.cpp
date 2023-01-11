@@ -10,46 +10,38 @@ bool vis[Max];
 vector<int> adj[Max], topo;
 
 // worked only for DAG, doesn't work for a cyclic graph
-void dfs(int n)
-{
+void dfs(int n) {
     for (int v : adj[n])
-        if (!vis[v])
-        {
+        if (!vis[v]) {
             vis[v] = 1;
             dfs(v);
         }
     topo.push_back(n);
 }
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     cin >> N >> M;
-    for (int i = 0; i < M; ++i)
-    {
+    for (int i = 0; i < M; ++i) {
         int v1, v2;
         cin >> v1 >> v2;
         adj[v1].push_back(v2);
     }
 
-    for (int i = 1; i <= N; ++i)
-    {
-        if (!vis[i])
-        {
+    for (int i = 1; i <= N; ++i) {
+        if (!vis[i]) {
             vis[i] = 1;
             dfs(i);
         }
     }
 
-    if (topo.size() == N)
-    {
+    if (topo.size() == N) {
         reverse(topo.begin(), topo.end());
         for (int v : topo)
             cout << v << ' ';
-    }
-    else
+    } else
         cout << "IMPOSSIBLE";
 
     return 0;
