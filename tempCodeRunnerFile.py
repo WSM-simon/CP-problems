@@ -1,2 +1,2 @@
 
-s = set(data)
+    x = randint(1,6)

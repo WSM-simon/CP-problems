@@ -1,28 +1,23 @@
 import sys
 from sys import stdin
+from random import randint
 
-N = int(stdin.readline().strip())
-data = list(map(int, stdin.readline().strip().split()))
+t = 1000000
+cnt1 = 0
+cnt2 = 0
+total_A = 0
+for i in range(t):
+    n = randint(1, 6)
+    m = randint(1, 6)
 
-data.sort()
+    x = randint(1, 6)
+    y = randint(1, 6)
 
-# this dictionary tells me how many cows can afford a maxmium of i dollars
-dic = dict()
-for i in data:
-    if i in dic:
-        dic[i] += 1
-    else:
-        dic[i] = 1
+    if (n*m == min(x, y)*min(x, y)):
+        cnt1 += 1
+    if (n*n == min(x, y)*min(x, y)):
+        cnt2 += 1
 
-# this set tells me how many kinds of cows are there
-s = list(set(data))
-
-mx_gain = 0
-min_fee = 9999999
-remain_cows = N
-for fee in s:
-    if ((fee * remain_cows) > mx_gain):
-        mx_gain = fee * remain_cows
-        for 
-
-print(f"{mx_gain} {min_fee}")
+print(cnt1/t)
+print(cnt2/t)
+print(cnt2/6/t)

@@ -3,26 +3,25 @@
 
 using namespace std;
 
-const int MxN = 1e5 + 3;
+const int MxN = 1e2 + 3;
 const int MxM = 1e5 + 3;
 
-int N, M, cost[MxN], col[MxN];
-vector<int> graph[MxN];
+int N, M, cost[MxN], col[MxN], dp[MxN], inD[MxN];
+vector<int> graph_reverse[MxN];
+queue<int> q;
 
 bool dfs(int n) {
-    col[n] = 1;
-    for (int v : graph[n]) {
-        if (col[v] == 0) {
-            if (!dfs(v)) {
-                col[n] = 3;
-                return false;
-            }
-        }
+    for (int v : graph_reverse[n]) {
+        if (col[v] == 0)
+            continue;
         if (col[v] == 1) {
-            col[n] = 3;
-            return false;
+            dfs(v);
+            dp[n] = max(dp[n], dp[v]);
         }
+        if (col[v] == 2)
+            dp[n] = max(dp[n], dp[v]);
     }
+    dp[n] += cost[n];
     col[n] = 2;
     return true;
 }
@@ -36,22 +35,29 @@ int main() {
         int T, R;
         cin >> T >> R;
         cost[i] = T;
+        inD[i] = R;
+        if (R == 0) q.push(i);
         for (int j = 0; j < R; ++j) {
             int node;
             cin >> node;
-            graph[i].push_back(node);
+            graph_reverse[node].push_back(i);
         }
     }
-    // 0 mean unvisited, 1 means visiting, 2 means visted, 3 means dead end
+    // find cycle
+    while (!q.empty()) {
+        int n = q.front();
+        col[n] = 1;
+        q.pop();
+        for (int v : graph_reverse[n]) {
+            if (--inD[v] == 0)
+                q.push(v);
+        }
+    }
+    // 0 mean in the cycle, 1 means not in cycle, 2 means visited
     for (int i = 1; i <= N; ++i) {
-        if (col[i] == 0)
+        if (col[i] == 1)
             dfs(i);
     }
-    int res = 0;
-    for (int i = 1; i <= N; ++i) {
-        if (col[i] != 3)
-            res += cost[i];
-    }
-    cout << res << '\n';
+    cout << *max_element(dp, end(dp)) << '\n';
     return 0;
 }
