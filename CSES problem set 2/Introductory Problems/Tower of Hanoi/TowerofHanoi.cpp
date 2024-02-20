@@ -8,6 +8,7 @@ const int MxM = 1e5 + 3;
 
 ll N, M;
 
+
 void hanoi(int n, int src, int aux, int dst) {
     if (n == 1)
         cout << src << ' ' << dst << '\n';
